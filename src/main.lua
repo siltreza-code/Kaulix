@@ -42,7 +42,9 @@ end
 local function Create(className: string, parent: Instance?, properties: {[string]: any})
 	local inst = Instance.new(className)
 	for prop, value in pairs(properties or {}) do
-		inst[prop] = value
+		pcall(function()
+			inst[prop] = value
+		end)
 	end
 	
 	if parent then
@@ -56,12 +58,12 @@ local function GetTime()
 end
 
 function Module.Create(Name:string)
-	local P = get_hidden_gui or gethui or Create("ScreenGui", CG, {
-	    IgnoreGuiInset = true,
-	    ResetOnSpawn = false,
-	    ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
-	    Name = RandStr(15,30)
-	})
+	local P = (get_hidden_gui and get_hidden_gui() or gethui and gethui() or Create("ScreenGui", CG, {
+		IgnoreGuiInset = true,
+		ResetOnSpawn = false,
+		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+		Name = RandStr(15,30)
+	}))
 	assert(P, "Failed to create or get ScreenGui")
 	local Overlay = Create("CanvasGroup",P,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),BackgroundColor3=Color3.fromRGB(55,55,55),
 		BackgroundTransparency = 1, GroupTransparency = 1})
