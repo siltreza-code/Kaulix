@@ -60,8 +60,8 @@ end
 function Module.Create(Name:string)
 	local P = get_hidden_gui or gethui or Create("ScreenGui", CG, {IgnoreGuiInset=true,ResetOnSpawn=false,
 		ZIndexBehavior=Enum.ZIndexBehavior.Sibling,Name=RandStr(15,30)})
-	local Overlay = Create("Frame",P,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),BackgroundColor3=Color3.fromRGB(55,55,55),
-		BackgroundTransparency = 1})
+	local Overlay = Create("CanvasGroup",P,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),BackgroundColor3=Color3.fromRGB(55,55,55),
+		BackgroundTransparency = 1, GroupTransparency = 1})
 	
 	-- Widget
 	local Widget1 = Create("Frame",Overlay,{AnchorPoint=Vector2.new(.5,0),BackgroundColor3=Color3.new(0.4, 0.4, 0.4),
@@ -78,6 +78,22 @@ function Module.Create(Name:string)
 			TimePart.Text = string.format("Time: %d-%d-%d %02d:%02d", T.year, T.month, T.day, T.hour, T.sec)
 		end
 	end)
+	
+	local Info = TweenInfo.new(2,Enum.EasingStyle.Sine)
+	local Show = TS:Create(Overlay,Info,{BackgroundTransparency=0.5, GroupTransparency = 0})
+	local Hide = TS:Create(Overlay,Info,{BackgroundTransparency=1, GroupTransparency = 1})
+	local shown = true
+	UIS.InputBegan:Connect(function(input: InputObject, gameProcessedEvent: boolean)
+		if gameProcessedEvent then return end
+		if input.KeyCode == Enum.KeyCode.Delete then
+			if shown then
+				Hide:Play()
+			else
+				Show:Play()
+			end
+		end
+	end)
+	Show:Play()
 end
 
 return Module
