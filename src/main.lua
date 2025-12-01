@@ -42,9 +42,7 @@ end
 local function Create(className: string, parent: Instance?, properties: {[string]: any})
 	local inst = Instance.new(className)
 	for prop, value in pairs(properties or {}) do
-		pcall(function()
-			inst[prop] = value
-		end)
+		inst[prop] = value
 	end
 	
 	if parent then
