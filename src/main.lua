@@ -1,3 +1,9 @@
+if _G.Kaulix then
+	_G.KaulixUI:Destroy()
+	_G.KaulixUI = nil
+	_G.Kaulix = false
+end
+
 local spawn = task.spawn
 local delay = task.delay
 
@@ -66,13 +72,16 @@ function Module.Create(Name:string)
 		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 		Name = RandStr(15,30)
 	})
+	
 	assert(P, "Failed to create or get ScreenGui")
 	local Overlay = Create("CanvasGroup",Parent,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),
 		BackgroundColor3=Color3.fromRGB(55,55,55),BackgroundTransparency = 1, GroupTransparency = 1})
+	_G.Kaulix = true
+	_G.KaulixUI = Overlay
 	
 	-- Widget
 	local Widget1 = Create("Frame",Overlay,{AnchorPoint=Vector2.new(.5,0),BackgroundColor3=Color3.new(0.4, 0.4, 0.4),
-		Position=UDim2.fromScale(.5,.05),Size=UDim2.fromScale(.35,.12),Name=RandStr(15,30)})
+		Position=UDim2.fromScale(.5,.05),Size=UDim2.fromScale(.25,.09),Name=RandStr(15,30)})
 	Create("UIStroke", Widget1, {LineJoinMode=Enum.LineJoinMode.Miter,Thickness=4})
 	
 	local TimePart =Create("TextLabel",Widget1,{Name = RandStr(15, 30),BackgroundTransparency=1,AnchorPoint=Vector2.new(.5,.5),
@@ -89,7 +98,7 @@ function Module.Create(Name:string)
 		end
 	end)
 	
-	local Info = TweenInfo.new(2,Enum.EasingStyle.Sine)
+	local Info = TweenInfo.new(.5,Enum.EasingStyle.Sine)
 	local Show = TS:Create(Overlay,Info,{BackgroundTransparency=0.5, GroupTransparency = 0})
 	local Hide = TS:Create(Overlay,Info,{BackgroundTransparency=1, GroupTransparency = 1})
 	local shown = true
