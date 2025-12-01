@@ -80,7 +80,7 @@ function Module.Create(Name:string)
 	Create("UIStroke",TimePart,{Thickness=1.5})
 	local WT = Create("TextLabel", Widget1, {Name = RandStr(15, 30),BackgroundTransparency=1,AnchorPoint=Vector2.new(.5,.5),
 		Position=UDim2.fromScale(.5,.65),Size=UDim2.fromScale(.9,.5),TextColor3=Color3.new(1,1,1),TextScaled=true,
-		Text="Welcome, "+PLR.DisplayName})
+		Text="Welcome, "..PLR.DisplayName})
 	
 	spawn(function()
 		while task.wait(1) do
