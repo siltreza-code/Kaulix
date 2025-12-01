@@ -58,8 +58,13 @@ local function GetTime()
 end
 
 function Module.Create(Name:string)
-	local P = get_hidden_gui or gethui or Create("ScreenGui", CG, {IgnoreGuiInset=true,ResetOnSpawn=false,
-		ZIndexBehavior=Enum.ZIndexBehavior.Sibling,Name=RandStr(15,30)})
+	local P = get_hidden_gui or gethui or Create("ScreenGui", CG, {
+	    IgnoreGuiInset = true,
+	    ResetOnSpawn = false,
+	    ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+	    Name = RandStr(15,30)
+	})
+	assert(P, "Failed to create or get ScreenGui")
 	local Overlay = Create("CanvasGroup",P,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),BackgroundColor3=Color3.fromRGB(55,55,55),
 		BackgroundTransparency = 1, GroupTransparency = 1})
 	
