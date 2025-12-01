@@ -17,6 +17,7 @@ Services = setmetatable({}, {
 
 local CG:Instance = Services.CoreGui
 local P:Players = Services.Players
+local PLR = P.LocalPlayer
 local UIS:UserInputService = Services.UserInputService
 local TS:TweenService = Services.TweenService
 local RS:RunService = Services.RunService
@@ -66,17 +67,20 @@ function Module.Create(Name:string)
 		Name = RandStr(15,30)
 	})
 	assert(P, "Failed to create or get ScreenGui")
-	local Overlay = Create("CanvasGroup",Parent,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),BackgroundColor3=Color3.fromRGB(55,55,55),
-		BackgroundTransparency = 1, GroupTransparency = 1})
+	local Overlay = Create("CanvasGroup",Parent,{Name=RandStr(15, 30),Size=UDim2.fromScale(1,1),
+		BackgroundColor3=Color3.fromRGB(55,55,55),BackgroundTransparency = 1, GroupTransparency = 1})
 	
 	-- Widget
 	local Widget1 = Create("Frame",Overlay,{AnchorPoint=Vector2.new(.5,0),BackgroundColor3=Color3.new(0.4, 0.4, 0.4),
-		Position=UDim2.fromScale(.5,.05),Size=UDim2.fromScale(.35,.2),Name=RandStr(15,30)})
+		Position=UDim2.fromScale(.5,.05),Size=UDim2.fromScale(.35,.12),Name=RandStr(15,30)})
 	Create("UIStroke", Widget1, {LineJoinMode=Enum.LineJoinMode.Miter,Thickness=4})
 	
-	local TimePart = Create("TextLabel", Widget1, {Name = RandStr(15, 30),BackgroundTransparency=1,
-		Position=UDim2.fromScale(.04,.15),Size=UDim2.fromScale(.4,.3), TextColor3=Color3.new(1,1,1),TextScaled=true})
+	local TimePart =Create("TextLabel",Widget1,{Name = RandStr(15, 30),BackgroundTransparency=1,AnchorPoint=Vector2.new(.5,.5),
+		Position=UDim2.fromScale(.5,.25),Size=UDim2.fromScale(.85,.4), TextColor3=Color3.new(1,1,1),TextScaled=true,Text=""})
 	Create("UIStroke",TimePart,{Thickness=1.5})
+	local WT = Create("TextLabel", Widget1, {Name = RandStr(15, 30),BackgroundTransparency=1,AnchorPoint=Vector2.new(.5,.5),
+		Position=UDim2.fromScale(.5,.65),Size=UDim2.fromScale(.9,.5),TextColor3=Color3.new(1,1,1),TextScaled=true,
+		Text="Welcome, "+PLR.DisplayName})
 	
 	spawn(function()
 		while task.wait(1) do
@@ -97,8 +101,12 @@ function Module.Create(Name:string)
 			else
 				Show:Play()
 			end
+			shown = not shown
 		end
 	end)
+	
+	
+	
 	Show:Play()
 end
 
